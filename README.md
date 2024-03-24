@@ -9,6 +9,7 @@
     - [Running the containers](#running-the-containers)
   - [Removing the containers](#removing-the-containers)
   - [Docker Compose](#docker-compose)
+  - [Logs](#logs)
 
 ## Building the Docker images
 
@@ -90,7 +91,7 @@ To execute Docker COmpose command for another file, use the following command:
 
 ```bash
 docker compose -f docker-compose.laravel.yml up -d --build
-``
+```
 
 ## Logs
 
@@ -99,4 +100,3 @@ To see the logs of the containers, use the following command:
 ```bash
 docker logs <container_id>
 ```
-
