@@ -1,22 +1,45 @@
+# Utiliza a imagem php:7.4-cli como base para um novo estágio de construção
+# chamado "builder"
 FROM php:7.4-cli AS builder
 
+# Define /var/www como o diretório de trabalho dentro do container
 WORKDIR /var/www
 
+# Atualiza a lista de pacotes e instala a biblioteca libzip-dev
 RUN apt-get update && \
   apt-get install libzip-dev -y && \
   docker-php-ext-install zip
 
+# Baixa o instalador do Composer, executa o instalador e depois o remove
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
   php composer-setup.php && \
   php -r "unlink('composer-setup.php');"
 
+# Cria um novo projeto Laravel usando o Composer
 RUN php composer.phar create-project --prefer-dist laravel/laravel laravel
 
+# =========================================================================
+# Inicia um novo estágio de construção com a imagem php:7.4-fpm-alpine
 FROM php:7.4-fpm-alpine
+
+# Define /var/www como o diretório de trabalho dentro do container
 WORKDIR /var/www
+
+# Remove o diretório /var/www/html se existir
 RUN rm -rf /var/www/html
+
+# Copia o diretório /var/www/laravel do estágio de construção "builder" para o
+# diretório de trabalho atual
 COPY --from=builder /var/www/laravel .
+
+# Cria um link simbólico de 'public' para 'html'
 RUN ln -s public html
+
+# Altera a propriedade do diretório /var/www para o usuário e grupo www-data
 RUN chown -R www-data:www-data /var/www
+
+# Expõe a porta 9000 do container
 EXPOSE 9000
+
+# Define o comando padrão para iniciar o container como "php-fpm"
 CMD [ "php-fpm" ]
