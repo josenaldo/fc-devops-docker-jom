@@ -7,6 +7,8 @@
   - [Running](#running)
     - [Creating the network](#creating-the-network)
     - [Running the containers](#running-the-containers)
+  - [Removing the containers](#removing-the-containers)
+  - [Docker Compose](#docker-compose)
 
 ## Building the Docker images
 
@@ -61,3 +63,40 @@ docker run -d --network laranet --name laravel josenaldo/laravel:prod
 
 docker run -d --network laranet --name nginx -p 8080:80 josenaldo/nginx:prod
 ```
+
+## Removing the containers
+
+To remove the containers, use the following commands:
+
+```bash
+docker rm $(docker ps -a -q) -f
+```
+
+## Docker Compose
+
+Alternatively, you can use Docker Compose to build and run the containers. To do so, execute the following command:
+
+```bash
+ docker compose up -d --build
+```
+
+If you want to remove the containers created by Docker Compose, use the following command:
+
+```bash
+docker compose down
+```
+
+To execute Docker COmpose command for another file, use the following command:
+
+```bash
+docker compose -f docker-compose.laravel.yml up -d --build
+``
+
+## Logs
+
+To see the logs of the containers, use the following command:
+
+```bash
+docker logs <container_id>
+```
+
