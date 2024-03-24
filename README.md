@@ -10,7 +10,7 @@
 Da pasta raiz do projeto, execd nginxcute o seguinte comando para construir a imagem Docker:
 
 ```bash
-docker build -t josenaldo/nginx:prod nginx -f Dockerfile.prod
+docker build -t josenaldo/nginx:prod nginx -f nginx/Dockerfile.prod
 ```
 
 Ou, se preferir executar o comando a partir do diretório `nginx`:
@@ -38,3 +38,11 @@ docker build -t josenaldo/laravel:prod . -f laravel/Dockerfile.prod
 ```
 
 ## Runing
+
+Para executar o projeto, execute o seguinte comando:
+
+```bash
+docker run -d --network laranet --name laravel josenaldo/laravel:prod
+
+docker run -d --network laranet --name nginx -p 8080:80 josenaldo/nginx:prod
+```
