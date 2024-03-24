@@ -1,11 +1,16 @@
 # Docker
 
 - [Docker](#docker)
-  - [Nginx](#nginx)
-  - [Laravel](#laravel)
+  - [Building the Docker images](#building-the-docker-images)
+    - [Nginx](#nginx)
+    - [Laravel](#laravel)
   - [Running](#running)
+    - [Creating the network](#creating-the-network)
+    - [Running the containers](#running-the-containers)
 
-## Nginx
+## Building the Docker images
+
+### Nginx
 
 From the root directory of the project, execute the following command to build the Nginx Docker image:
 
@@ -21,7 +26,7 @@ cd nginx
 docker build -t josenaldo/nginx:prod . -f Dockerfile.prod
 ```
 
-## Laravel
+### Laravel
 
 From the root directory of the project, execute the following command to build the Laravel Docker image:
 
@@ -38,6 +43,16 @@ docker build -t josenaldo/laravel:prod . -f laravel/Dockerfile.prod
 ```
 
 ## Running
+
+### Creating the network
+
+Before running the Docker containers, create a network to connect them:
+
+```bash
+docker network create laranet
+```
+
+### Running the containers
 
 To run the Docker containers, use the following commands:
 
